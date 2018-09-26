@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:dio/dio.dart';
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -45,11 +47,22 @@ class NetworkReqState extends State<NetworkReq> {
     );
   }
 
+  // 自带http
+  // loadData() async {
+  //   String dataUrl = "https://jsonplaceholder.typicode.com/posts";
+  //   http.Response response = await http.get(dataUrl);
+  //   setState(() {
+  //     widgets = json.decode(response.body);
+  //   });
+  // }
+
+  // dio
   loadData() async {
-    String dataUrl = "https://jsonplaceholder.typicode.com/posts";
-    http.Response response = await http.get(dataUrl);
+    Dio dio = Dio();
+    Response response =
+        await dio.get("https://jsonplaceholder.typicode.com/posts");
     setState(() {
-      widgets = json.decode(response.body);
+      widgets.addAll(response.data);
     });
   }
 
